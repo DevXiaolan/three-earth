@@ -1,0 +1,5 @@
+docker build -t three-earth:201030 .
+
+docker tag three-earth:201030 registry.cn-shenzhen.aliyuncs.com/lan_jane/three-earth:201030
+
+docker push registry.cn-shenzhen.aliyuncs.com/lan_jane/three-earth:201030
