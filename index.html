@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>哦，我画了个地球</title>
+    <base href="https://three-earth.lanhao.name/" />
     <script src="assets/plus/threejs/three.min.js"></script>
     <script src="assets/plus/threejs/js/controls/OrbitControls.js"></script>
-    <script src="assets/plus/threejs/js/libs/stats.min.js"></script>
     <style type="text/css">
         body {
             margin: 0px;
@@ -41,12 +41,7 @@
         threeStart();
     })
 
-    // 帧蘋
-    var stats;
-    function initStats() {
-        stats = new Stats();
-        document.getElementById('canvas-frame').appendChild(stats.dom);
-    }
+   
 
     // 渲染器
     var renderer;
@@ -129,7 +124,6 @@
     var controls;
     function threeStart() {
         initThree();
-        initStats();
         initCamera();
         initScene();
         initLight();
@@ -143,7 +137,7 @@
 
     function animate() {
         controls.update();
-        stats.update();
+        
         // 地球自转
         earthMesh.rotation.y -= 0.002;
 
@@ -156,6 +150,27 @@
     }
 
 
+    const render = () => {
+        console.log('Render');
+        threeStart();
+        return Promise.resolve();
+    };
+
+    (global => {
+    global['three-earth'] = {
+        bootstrap: () => {
+        console.log('three-earth bootstrap');
+        return Promise.resolve();
+        },
+        mount: () => {
+        console.log('three-earth mount');
+        return render();
+        },
+        unmount: () => {
+        console.log('three-earth unmount');
+        return Promise.resolve();
+        },
+    };
+    })(window);
 </script>
-<script src="./entry.js"></script>
 </html>
